@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function create()
     {
         return view("create-product");
-    }
+    } 
     
     public function store(Request $request)
     {
@@ -101,14 +101,14 @@ class ProductController extends Controller
         return redirect()->route('product.index')->with('success','Deleted Product');
     }
 
-    public function search(Request $request)
+     public function search(Request $request)
     {
         $search = $request->input('search');
 
         $products = Product::where("name","LIKE","%$search%")->paginate(20);
         
         return view("shop",compact("products"));
-    }
+    } 
 
     public function featuredProducts()
     {

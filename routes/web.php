@@ -22,12 +22,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 
+Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
+
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware('admin');
 Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update')->middleware('admin');
 Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit')->middleware('admin');
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('product.destory')->middleware('admin');
-Route::post('/product/search', [ProductController::class, 'search'])->name('product.search');
+Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
 Route::get('/shopping-cart', [ProductController::class, 'cart'])->name('product.cart')->middleware('auth');
 Route::get('/book/{id}', [ProductController::class, 'addToCart'])->name('product.addToCart')->middleware('auth');
 Route::patch('/update-shopping-cart', [ProductController::class, 'updateCart'])->name('product.updateCart')->middleware('auth');
