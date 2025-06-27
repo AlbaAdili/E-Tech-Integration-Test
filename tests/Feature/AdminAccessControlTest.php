@@ -28,8 +28,40 @@ class AdminAccessControlTest extends TestCase
 
     public function test_guest_cannot_access_admin_routes()
     {
-        $this->get('/product')->assertRedirect('/');
-        $this->get('/contacts')->assertRedirect('/');
+        $this->get('/product')->assertRedirect('/login');
+        $this->get('/contacts')->assertRedirect('/login');
+    }
+
+
+    public function test_admin_can_access_contact_search()
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->post('/contacts/search', [
+            'search' => 'anything'
+        ]);
+
+        $response->assertStatus(200); // OK
+    }
+
+    public function test_user_cannot_access_contact_search()
+    {
+        $user = User::factory()->create(['role' => 'user']);
+
+        $response = $this->actingAs($user)->post('/contacts/search', [
+            'search' => 'forbidden'
+        ]);
+
+        $response->assertRedirect('/'); // Or use ->assertStatus(403) if you prefer
+    }
+
+    public function test_guest_cannot_access_contact_search()
+    {
+        $response = $this->post('/contacts/search', [
+            'search' => 'guest attempt'
+        ]);
+
+        $response->assertRedirect('/login');
     }
 
 }

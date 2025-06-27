@@ -9,10 +9,17 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user() && $request->user()->role === 'admin') {
-            return $next($request);
+        
+        if (!$request->user()) {
+            return redirect('/login');
         }
 
-        return redirect('/')->with('error', 'You do not have permission to access this page.');
+    
+        if ($request->user()->role !== 'admin') {
+            return redirect('/')->with('error', 'You do not have permission to access this page.');
+        }
+
+      
+        return $next($request);
     }
 }
