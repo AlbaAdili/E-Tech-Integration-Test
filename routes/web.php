@@ -24,7 +24,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::get('/product/search', [ProductController::class, 'search'])->name('product.search');
 
-Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/product', [ProductController::class, 'index'])->name('product.index')->middleware('admin');
 Route::post('/product', [ProductController::class, 'store'])->name('product.store')->middleware('admin');
 Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update')->middleware('admin');
 Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit')->middleware('admin');
@@ -42,9 +42,9 @@ Route::get('/shop/{category?}', [ProductController::class, 'index'])->name('shop
 Route::get('/faqs', [FaqsController::class, 'index'])->name('faqs.index');
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
-Route::get('/contacts', [ContactController::class, 'index'])->name('contact.index');
+Route::get('/contacts', [ContactController::class, 'index'])->name('contact.index')->middleware('admin');
 Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contact.destroy')->middleware('admin');
-Route::post('/contacts/search', [ContactController::class, 'search'])->name('contact.search');
+Route::post('/contacts/search', [ContactController::class, 'search'])->name('contact.search')->middleware('admin');
 
 Route::get('/orders', [OrderController::class, 'index'])->name('order.index')->middleware('auth');
 
