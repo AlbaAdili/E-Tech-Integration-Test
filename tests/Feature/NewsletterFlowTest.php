@@ -33,4 +33,13 @@ class NewsletterFlowTest extends TestCase
         $response->assertSessionHasErrors('email');
     }
 
+    public function test_newsletter_subscription_requires_valid_email()
+    {
+        $response = $this->post('/subscribe/newsletter', [
+            'email' => 'invalid-email-format',
+        ]);
+
+        $response->assertSessionHasErrors('email');
+    }
+
 }

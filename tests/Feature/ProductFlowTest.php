@@ -56,15 +56,6 @@ class ProductFlowTest extends TestCase
         $this->assertDatabaseMissing('products', ['id' => $product->id]);
     }
 
-    /*public function test_user_can_search_product()
-    {
-        Product::factory()->create(['name' => 'Laptop']);
-
-        $response = $this->get('/product/search?search=Laptop');
-        $response->assertStatus(200);
-        $response->assertSee('Laptop');
-    }*/
-
     public function test_add_to_cart_functionality()
     {
         $user = User::factory()->create();

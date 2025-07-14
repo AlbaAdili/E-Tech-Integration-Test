@@ -62,4 +62,25 @@ class CartFlowTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewHas('totalCartPrice', 400); // 2*100 + 1*200
     }
+
+    public function test_user_can_add_product_to_cart()
+    {
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
+
+        $response = $this->actingAs($user)->get("/book/{$product->id}");
+
+        $response->assertRedirect(); // should redirect back
+        $this->assertArrayHasKey($product->id, session('cart'));
+        $this->assertEquals(1, session("cart.{$product->id}.quantity"));
+    }
+
+
+    public function test_guest_cannot_access_cart()
+    {
+        $response = $this->get('/shopping-cart');
+        $response->assertRedirect('/login');
+    }
+
+
 }
